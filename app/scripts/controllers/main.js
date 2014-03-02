@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('shopListApp')
+angular.module('shoppingListApp')
   .controller('MainCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
