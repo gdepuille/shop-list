@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('shopListApp').constant('ShoppingListConstantes', {
+angular.module('shoppingListApp').constant('ShoppingListConstantes', {
     states : {
 
     },
