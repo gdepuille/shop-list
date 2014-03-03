@@ -2,6 +2,7 @@
 
 angular.module('shoppingListApp').constant('ShoppingListConstantes', {
     states : {
+        LOGIN : 'login'
 
     },
     events : {
