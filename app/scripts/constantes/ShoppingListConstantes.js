@@ -2,8 +2,12 @@
 
 angular.module('shoppingListApp').constant('ShoppingListConstantes', {
     states : {
-        LOGIN : 'login'
-
+        LOGIN : 'login',
+        MAIN : 'main'
+    },
+    urls : {
+        LOGIN : '/',
+        MAIN : '/content'
     },
     events : {
 
