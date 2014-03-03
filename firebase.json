@@ -1,4 +1,5 @@
 {
-  "firebase": "listecourses",
-  "public": "dist"
+    "firebase": "listecourses",
+    "public": "dist",
+    "rules": "config/security-rules.json"
 }
