@@ -1,38 +1,38 @@
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Liste de courses</a>
-        </div>
+<div data-ng-controller="MainCtrl">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Liste de courses</a>
+            </div>
 
-        <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown-user">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.firstName }} {{ user.lastName }} <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#/compte/modifier">Modifier</a></li>
-                    <li><a href="#/logout">Se déconnecter</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-        <!-- Menu de gauche -->
-        <div class="col-md-2 bs-sidebar">
-            Menu gauche
-        </div>
-        <!-- Listes des listes -->
-        <div class="col-md-2">
-            Liste des listes
-        </div>
-        <!-- Contenu de la liste selectionne -->
-        <div class="col-md-8">
-            <ul class="pager">
-                <li><a href="#">Précédente</a></li>
-                <li><a href="#">Suivante</a></li>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown-user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.firstName }} {{ user.lastName }} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-cli>Se déconnecter</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
-</div>
 
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Menu de gauche -->
+            <div class="col-md-2 bs-sidebar">
+                Menu gauche
+            </div>
+            <!-- Listes des listes -->
+            <div class="col-md-2">
+                Liste des listes
+            </div>
+            <!-- Contenu de la liste selectionne -->
+            <div class="col-md-8">
+                <ul class="pager">
+                    <li><a href="#">Précédente</a></li>
+                    <li><a href="#">Suivante</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
