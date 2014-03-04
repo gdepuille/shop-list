@@ -3,7 +3,48 @@
  */
 {
     "rules": {
-        ".read": true,
-        ".write": "auth != null"
+
+        "users": {
+            "$oneUser": {
+                "firstName": {
+                    ".write": "auth != null && auth.uid == $oneUser",
+                    ".read": "auth != null && auth.uid == $oneUser",
+                    ".validate": "newData.isString()"
+                },
+                "lastName": {
+                    ".write": "auth != null && auth.uid == $oneUser",
+                    ".read": "auth != null && auth.uid == $oneUser",
+                    ".validate": "newData.isString()"
+                },
+                "username": {
+                    ".write": "auth != null && auth.uid == $oneUser",
+                    ".read": "auth != null && auth.uid == $oneUser",
+                    ".validate": "newData.isString() && newData.val().contains('@')"
+                },
+                "provider": {
+                    ".write": "auth != null && auth.uid == $oneUser",
+                    ".read": "auth != null && auth.uid == $oneUser",
+                    ".validate": "newData.isString() && (newData.val() == 'twitter' || newData.val() == 'facebook' || newData.val() == 'google')"
+                },
+                "lists" : {
+                    "$lst" : {
+                        ".read" : "auth != null && auth.uid == $oneUser",
+                        ".write" : "auth != null && auth.uid == $oneUser",
+                        ".validate" : "root.child('lists').child($lst).exist()"
+                    }
+                },
+
+                "$other": {
+                    ".validate": false
+                }
+            }
+        },
+
+        "lists": {
+            "$oneList" : {
+                ".read": true,
+                ".write": true
+            }
+        }
     }
 }
