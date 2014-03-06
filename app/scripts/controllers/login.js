@@ -25,4 +25,13 @@ angular.module ('shoppingListApp').controller ('LoginCtrl', function ($scope, Us
             scope: 'email,user_about_me'
         });
     };
+
+    /**
+     * Twitter login
+     */
+    $scope.loginTwitter = function () {
+        UsersCommand.login('twitter', {
+            rememberMe: true
+        });
+    };
 });
