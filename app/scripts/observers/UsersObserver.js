@@ -1,11 +1,7 @@
-/**************************************************************************************************
- * Copyright (c) Nicolas Hodicq (nicolas.hodicq@gmail.com).                                       *
- **************************************************************************************************/
-
 'use strict';
 
 angular.module ('shoppingListApp')
-    .service ('UsersObserver', function ($rootScope, UsersModel, UsersCommand, $log) {
+    .service ('UsersObserver', function ($rootScope, UsersModel, UsersCommand, $log, $state, ShoppingListConstantes) {
 
     // ------------------------------------------------ //
     // --------------- PRIVATE FIELDS ----------------- //
@@ -22,7 +18,7 @@ angular.module ('shoppingListApp')
     $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
         authenticatedUserRef = _usersNode.$child(user.uid);
         authenticatedUserRef.$on('loaded', function (value) {
-            if (value === null) {
+            if (angular.isUndefined(value)) {
                 UsersCommand.createUserDataBase(user);
             } else {
                 // Set the user to model
@@ -32,11 +28,18 @@ angular.module ('shoppingListApp')
             // stop the synchronization for loaded
             authenticatedUserRef.$off('loaded');
         });
+
+        // GO to the app
+        $state.go(ShoppingListConstantes.states.MAIN);
+
     });
 
     $rootScope.$on('$firebaseSimpleLogin:logout', function (e, user) {
         authenticatedUserRef = undefined;
         UsersModel.setUser(undefined);
+
+        // GO to the login pages
+        $state.go(ShoppingListConstantes.states.LOGIN);
     });
 
     // ------------------------------------------------ //

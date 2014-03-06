@@ -23,7 +23,7 @@ angular.module('shoppingListApp')
             if(angular.isDefined(authenticatedUser)){
                 // User does not exist so we 'll create it from authenticated user
                 var userTocreate = {
-                    id: authenticatedUser.id,
+                    uid: authenticatedUser.uid,
                     provider: authenticatedUser.provider
                 };
 
