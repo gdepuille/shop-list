@@ -1,6 +1,3 @@
-/**
- * Created by gregorydepuille on 03/03/14.
- */
 {
     "rules": {
 
@@ -25,7 +22,7 @@
                     "$lst" : {
                         ".read" : "auth != null && auth.uid == $oneUser",
                         ".write" : "auth != null && auth.uid == $oneUser",
-                        ".validate" : "root.child('lists').child($lst).exist()"
+                        ".validate" : "root.child('lists').child($lst).exists()"
                     }
                 },
 

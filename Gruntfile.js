@@ -181,7 +181,7 @@ module.exports = function (grunt) {
         },
 
         // Renames files for browser caching purposes
-        rev            : {
+        rev : {
             dist: {
                 files: {
                     src: [
@@ -294,7 +294,7 @@ module.exports = function (grunt) {
                             '*.html',
                             'views/{,*/}*.html',
                             'bower_components/**/*',
-            'images/{,*/}*',
+                            'images/{,*/}*',
                             'fonts/*'
                         ]
                     },
