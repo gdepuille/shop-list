@@ -10,7 +10,7 @@ angular.module('shoppingListApp').constant('ShoppingListConstantes', {
         MAIN : '/content'
     },
     events : {
-
+        USER_LOADED : 'UsersModel_USER_LOADED'
     },
     firebase : {
         ROOT : 'https://listecourses.firebaseio.com/'

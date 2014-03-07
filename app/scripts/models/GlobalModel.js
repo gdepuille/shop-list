@@ -7,7 +7,7 @@ angular.module ('shoppingListApp').service ('GlobalModel',
         // --------------- PRIVATE FIELDS ----------------- //
         // ------------------------------------------------ //
 
-        var _rootFirebaseNode = $firebase (ShoppingListConstantes.firebase.ROOT);
+        var _rootFirebaseNode = $firebase (new Firebase(ShoppingListConstantes.firebase.ROOT));
 
         // ------------------------------------------------ //
         // ------------------- ACCESSORS ------------------ //
