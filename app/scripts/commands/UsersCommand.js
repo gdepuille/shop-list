@@ -22,25 +22,42 @@ angular.module('shoppingListApp')
         this.createUserDataBase = function (authenticatedUser) {
             if(angular.isDefined(authenticatedUser)){
                 // User does not exist so we 'll create it from authenticated user
-                var userTocreate = {
-                    uid: authenticatedUser.uid,
-                    provider: authenticatedUser.provider
-                };
+                var userTocreate = {};
 
-                // TODO : enrichir en fonction du provider
-//                switch (authenticatedUser.provider) {
-//                    case 'github' :
-//                        userTocreate.username = authenticatedUser.username;
-//                        break;
-//                }
+                switch (authenticatedUser.provider) {
+                    case 'facebook' :
+                        userTocreate.firstName = authenticatedUser.first_name;
+                        userTocreate.lastName = authenticatedUser.last_name;
+                        userTocreate.username = authenticatedUser.username;
+                        break;
+                    case 'google' :
+                        userTocreate.firstName = authenticatedUser.given_name;
+                        userTocreate.lastName = authenticatedUser.family_name;
+                        userTocreate.username = authenticatedUser.email;
+                        break;
+                    case 'twitter' :
+                        userTocreate.firstName = authenticatedUser.displayName;
+                        userTocreate.lastName = '';
+                        userTocreate.username = authenticatedUser.username;
+                        break;
+                }
 
                 // ADD the user in BDD
-                _usersNode[userTocreate.uid] = userTocreate;
-                _usersNode.$save(userTocreate.uid).then(
+                _usersNode[authenticatedUser.uid] = userTocreate;
+                _usersNode.$save(authenticatedUser.uid).then(
                     function () {
                         UsersModel.setUser(userTocreate);
                     }, errorCallback);
             }
+        }
+
+        /**
+         * Update the user data base with the authenticated user
+         * @param authenticatedUser
+         */
+        this.userUserDataBase = function (authenticatedUser) {
+
+
         }
 
         /**
