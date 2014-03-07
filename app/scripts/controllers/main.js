@@ -1,7 +1,10 @@
 'use strict';
 
 angular.module('shoppingListApp')
-    .controller('MainCtrl', function ($scope) {
+    .controller('MainCtrl', function ($scope, UsersCommand) {
+
+        // START MOCK
+
         $scope.user = {
             id: '12345',
             firstName: "God",
@@ -70,6 +73,13 @@ angular.module('shoppingListApp')
                 qte: 3,
                 checked: false
             }]
+        };
+
+        // END MOCK
+
+        // Appel du logout
+        $scope.logout = function () {
+            UsersCommand.logout();
         };
     }
 );
