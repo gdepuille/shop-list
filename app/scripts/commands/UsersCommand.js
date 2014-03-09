@@ -31,8 +31,8 @@ angular.module('shoppingListApp')
                         userTocreate.username = authenticatedUser.username;
                         break;
                     case 'google' :
-                        userTocreate.firstName = authenticatedUser.given_name;
-                        userTocreate.lastName = authenticatedUser.family_name;
+                        userTocreate.firstName = authenticatedUser.thirdPartyUserData.given_name;
+                        userTocreate.lastName = authenticatedUser.thirdPartyUserData.family_name;
                         userTocreate.username = authenticatedUser.email;
                         break;
                     case 'twitter' :
@@ -55,9 +55,13 @@ angular.module('shoppingListApp')
          * Update the user data base with the authenticated user
          * @param authenticatedUser
          */
-        this.userUserDataBase = function (authenticatedUser) {
+        this.updateUserDataBase = function (authenticatedUser) {
+            if(angular.isDefined(authenticatedUser)){
 
+                var user = _usersNode.$child(authenticatedUser.uid);
+                $log.info(user);
 
+            }
         }
 
         /**

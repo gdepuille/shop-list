@@ -21,8 +21,7 @@ angular.module ('shoppingListApp')
             if (angular.isUndefined(value)) {
                 UsersCommand.createUserDataBase(user);
             } else {
-                // Set the user to model
-                UsersModel.setUser(value);
+                UsersCommand.updateUserDataBase(user);
             }
 
             // stop the synchronization for loaded
