@@ -96,8 +96,9 @@ body {
 /* Classes pour les boutons de login */
 [class*="btn-login-"] {
   text-align: left;
+  text-overflow: ellipsis;
   font-size: 13px;
-  width: 215px;
+  width: 100%;
   color: white;
 }
 
