@@ -1,21 +1,9 @@
 'use strict';
 
 angular.module('shoppingListApp')
-    .controller('MainCtrl', function ($scope, UsersCommand) {
+    .controller('MainCtrl', function ($rootScope, $scope, $log, ShoppingListConstantes, UsersCommand, UsersModel) {
 
         // START MOCK
-
-        $scope.user = {
-            id: '12345',
-            firstName: "God",
-            lastName: "Michel",
-            username: "god.michel@ste.fr",
-            provider: 'twitter',
-            premium: false,
-            dateCreation: '2014-03-03T22:34:00Z',
-            lastConnection : '2014-03-03T22:42:00Z',
-            lists: [12, 43, 45]
-        };
 
         $scope.lists = [{
             id: 1,
@@ -77,9 +65,26 @@ angular.module('shoppingListApp')
 
         // END MOCK
 
+        /* Information sur l'utilisateur connecté */
+        $scope.user = UsersModel.getUser();
+
         // Appel du logout
         $scope.logout = function () {
             UsersCommand.logout();
         };
+
+        /* Méthode d'initialisation du controller */
+        var initialise = function() {
+            // Redirection sur la page de login si l'utilisateur n'est pas authentifié
+            if ($scope.user == undefined) {
+                $log.debug('Pas encore authentifié, on va sur la page de login')
+
+                // Dispatch de l'event firebase afin de ne pas recoder ce qui est déjà fait dans le UsersObserver
+                $rootScope.$broadcast('$firebaseSimpleLogin:logout');
+            }
+        }
+
+        // Init
+        initialise();
     }
 );
