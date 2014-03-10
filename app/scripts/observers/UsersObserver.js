@@ -9,34 +9,39 @@ angular.module ('shoppingListApp')
 
     var _usersNode = UsersModel.getUsersFirebaseNode();
 
-    var authenticatedUserRef;
+    var _authenticatedUserRef;
 
     // ------------------------------------------------ //
     // ------------------ LISTENERS ------------------- //
     // ------------------------------------------------ //
 
     $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
-        authenticatedUserRef = _usersNode.$child(user.uid);
-        authenticatedUserRef.$on('loaded', function (value) {
-            if (angular.isUndefined(value)) {
+        _authenticatedUserRef = _usersNode.$child(user.uid);
+        _authenticatedUserRef.$on('loaded', function (value) {
+            if (value == null || angular.isUndefined(value)) {
                 UsersCommand.createUserDataBase(user);
             } else {
                 UsersCommand.updateUserDataBase(user);
             }
 
             // stop the synchronization for loaded
-            authenticatedUserRef.$off('loaded');
+            _authenticatedUserRef.$off('loaded');
         });
-
-        // GO to the app
-        $state.go(ShoppingListConstantes.states.MAIN);
-
     });
 
     $rootScope.$on('$firebaseSimpleLogin:logout', function (e, user) {
-        authenticatedUserRef = undefined;
-        UsersModel.setUser(undefined);
+        _authenticatedUserRef = undefined;
+        UsersModel.setUser(_authenticatedUserRef);
+    });
 
+    /* Une fois le compte utilisateur chargé on va sur l'application */
+    $rootScope.$on(ShoppingListConstantes.events.USER_LOADED, function(user) {
+        // GO to the app
+        $state.go(ShoppingListConstantes.states.MAIN);
+    });
+
+    /* Lors du reset de l'utilisateur dans le model, on va sur le login */
+    $rootScope.$on(ShoppingListConstantes.events.USER_UNLOADED, function() {
         // GO to the login pages
         $state.go(ShoppingListConstantes.states.LOGIN);
     });

@@ -57,10 +57,8 @@ angular.module('shoppingListApp')
          */
         this.updateUserDataBase = function (authenticatedUser) {
             if(angular.isDefined(authenticatedUser)){
-
                 var user = _usersNode.$child(authenticatedUser.uid);
                 $log.info(user);
-
             }
         }
 
