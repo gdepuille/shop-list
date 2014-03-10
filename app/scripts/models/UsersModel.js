@@ -29,7 +29,11 @@ angular.module ('shoppingListApp').service ('UsersModel',
          */
         this.setUser = function (value) {
             _user = value;
-            $rootScope.$broadcast (ShoppingListConstantes.events.USER_LOADED, _user);
+            if (angular.isDefined(_user)) {
+                $rootScope.$broadcast (ShoppingListConstantes.events.USER_LOADED, _user);
+            } else {
+                $rootScope.$broadcast (ShoppingListConstantes.events.USER_UNLOADED);
+            }
         }
 
         /**
