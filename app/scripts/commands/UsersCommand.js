@@ -22,32 +22,8 @@ angular.module('shoppingListApp')
         this.createUserDataBase = function (authenticatedUser) {
             if(angular.isDefined(authenticatedUser)){
                 // User does not exist so we 'll create it from authenticated user
-                var userTocreate = {};
-
-                switch (authenticatedUser.provider) {
-                    case 'facebook' :
-                        userTocreate.firstName = authenticatedUser.first_name;
-                        userTocreate.lastName = authenticatedUser.last_name;
-                        userTocreate.username = authenticatedUser.username;
-                        break;
-                    case 'google' :
-                        userTocreate.firstName = authenticatedUser.thirdPartyUserData.given_name;
-                        userTocreate.lastName = authenticatedUser.thirdPartyUserData.family_name;
-                        userTocreate.username = authenticatedUser.email;
-                        break;
-                    case 'twitter' :
-                        userTocreate.firstName = authenticatedUser.displayName;
-                        userTocreate.lastName = '';
-                        userTocreate.username = authenticatedUser.username;
-                        break;
-                }
-
-                // ADD the user in BDD
-                _usersNode[authenticatedUser.uid] = userTocreate;
-                _usersNode.$save(authenticatedUser.uid).then(
-                    function () {
-                        UsersModel.setUser(userTocreate);
-                    }, errorCallback);
+                retrieveUserInfosFromProvider(authenticatedUser, {});
+                $log.debug("Ajout d'un nouvel utilisateur : " + authenticatedUser.uid);
             }
         }
 
@@ -56,9 +32,10 @@ angular.module('shoppingListApp')
          * @param authenticatedUser
          */
         this.updateUserDataBase = function (authenticatedUser) {
-            if(angular.isDefined(authenticatedUser)){
-                var user = _usersNode.$child(authenticatedUser.uid);
-                $log.info(user);
+            if(angular.isDefined(authenticatedUser)) {
+                // User is already added. Update the datas from authentication values
+                retrieveUserInfosFromProvider(authenticatedUser, _usersNode.$child(authenticatedUser.uid));
+                $log.debug("Modification des informations de l'utilisateur : " + authenticatedUser.uid);
             }
         }
 
@@ -106,4 +83,36 @@ angular.module('shoppingListApp')
          * @param error
          */
         var errorCallback = ErrorCommand.notifyFirebaseError;
+
+        /**
+         * Récupération des informations de l'utilisateur depuis les infos du provider
+         */
+        var retrieveUserInfosFromProvider = function(authenticatedUser, initUser) {
+            switch (authenticatedUser.provider) {
+                case 'facebook' :
+                    initUser.firstName = authenticatedUser.first_name;
+                    initUser.lastName = authenticatedUser.last_name;
+                    initUser.username = authenticatedUser.username;
+                    break;
+                case 'google' :
+                    initUser.firstName = authenticatedUser.thirdPartyUserData.given_name;
+                    initUser.lastName = authenticatedUser.thirdPartyUserData.family_name;
+                    initUser.username = authenticatedUser.email;
+                    break;
+                case 'twitter' :
+                    initUser.firstName = authenticatedUser.displayName;
+                    initUser.lastName = '';
+                    initUser.username = authenticatedUser.username;
+                    break;
+            }
+
+            // ADD the user in BDD
+            _usersNode[authenticatedUser.uid] = initUser;
+            _usersNode.$save(authenticatedUser.uid).then(
+                function () {
+                    UsersModel.setUser(initUser);
+                }, errorCallback);
+
+            return initUser;
+        };
     });
