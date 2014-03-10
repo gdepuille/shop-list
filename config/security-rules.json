@@ -1,28 +1,25 @@
 {
     "rules": {
 
+        // Noeud contenant tous les utilisateurs
         "users": {
             "$oneUser": {
+                // Uniquement l'utilisateur connecté peut lire et écrire les informations le concernant.
+                ".write": "auth != null && auth.uid == $oneUser",
+                ".read": "auth != null && auth.uid == $oneUser",
+
                 "firstName": {
-                    ".write": "auth != null && auth.uid == $oneUser",
-                    ".read": "auth != null && auth.uid == $oneUser",
                     ".validate": "newData.isString()"
                 },
                 "lastName": {
-                    ".write": "auth != null && auth.uid == $oneUser",
-                    ".read": "auth != null && auth.uid == $oneUser",
                     ".validate": "newData.isString()"
                 },
                 "username": {
-                    ".write": "auth != null && auth.uid == $oneUser",
-                    ".read": "auth != null && auth.uid == $oneUser",
-                    ".validate": "newData.isString() && newData.val().contains('@')"
+                    ".validate": "newData.isString()"
                 },
                 "lists" : {
                     "$lst" : {
-                        ".read" : "auth != null && auth.uid == $oneUser",
-                        ".write" : "auth != null && auth.uid == $oneUser",
-                        ".validate" : "root.child('lists').child($lst).exists()"
+                        ".validate" : "root.child('lists').hasChild($lst)"
                     }
                 },
 
@@ -32,10 +29,12 @@
             }
         },
 
+        // Ensembles des listes disponible
         "lists": {
             "$oneList" : {
-                ".read": true,
-                ".write": true
+                // On peut lire et ecrire une listes lorsque celle-ci est inclus la listes des listes de l'utilisateur
+                ".read": "auth != null && root.child('users').child(auth.uid).child('lists').hasChild($oneList)",
+                ".write": "auth != null && root.child('users').child(auth.uid).child('lists').hasChild($oneList)"
             }
         }
     }
