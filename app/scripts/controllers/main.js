@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('shoppingListApp')
-    .controller('MainCtrl', function ($rootScope, $scope, $log, ShoppingListConstantes, UsersCommand, UsersModel) {
+    .controller('MainCtrl', function ($rootScope, $scope, $log, ListsCommand, ListsModel, UsersModel) {
 
         // START MOCK
 
@@ -65,6 +65,10 @@ angular.module('shoppingListApp')
 
         // END MOCK
 
+        // ---------------------------------------------------------------- //
+        // ------------------------------ SCOPE --------------------------- //
+        // ---------------------------------------------------------------- //
+
         /* Information sur l'utilisateur connecté */
         $scope.user = UsersModel.getUser();
 
@@ -72,6 +76,14 @@ angular.module('shoppingListApp')
         $scope.logout = function () {
             UsersCommand.logout();
         };
+
+        $scope.addList = function () {
+            ListsCommand.createList();
+        };
+
+        // ---------------------------------------------------------------- //
+        // ------------------------- PRIVATE BUSINESS --------------------- //
+        // ---------------------------------------------------------------- //
 
         /* Méthode d'initialisation du controller */
         var initialise = function() {
@@ -82,9 +94,12 @@ angular.module('shoppingListApp')
                 // Dispatch de l'event firebase afin de ne pas recoder ce qui est déjà fait dans le UsersObserver
                 $rootScope.$broadcast('$firebaseSimpleLogin:logout');
             }
-        }
+        };
 
-        // Init
+        // ---------------------------------------------------------------- //
+        // ---------------------------- INITIALIZE ------------------------ //
+        // ---------------------------------------------------------------- //
+
         initialise();
     }
 );
