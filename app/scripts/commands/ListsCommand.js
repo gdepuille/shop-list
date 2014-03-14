@@ -19,12 +19,12 @@ angular.module('shoppingListApp')
 
             var newList = {
                 name : 'Nouvelle liste',
-                ownerUid : UsersModel.getUser().uid
+                ownerUid : UsersModel.getUser().$id
             };
 
             _listsNode.$add(newList).then(
                 function (list) {
-                    $log.debub('test new list :' + list);
+                    $log.debug('test new list :' + list);
                 }
             );
 

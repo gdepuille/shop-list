@@ -5,43 +5,7 @@ angular.module('shoppingListApp')
 
         // START MOCK
 
-        $scope.lists = [{
-            id: 1,
-            name: 'Achat pour Haloween',
-            ownerId: 12345,
-            icon: 'base64 : wxccddsfsbb==',
-            items: [{
-                id: 34566,
-                name: 'Beurre',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 1,
-                checked: false
-            }, {
-                id: 123,
-                name: 'Carambar',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 3,
-                checked: false
-            }]
-        }, {
-            id: 2,
-            name: 'Achat pour Noël',
-            ownerId: 12345,
-            icon: 'base64 : wxccddsfsbb==',
-            items: [{
-                id: 12,
-                name: 'Foie gras',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 1,
-                checked: false
-            }, {
-                id: 345,
-                name: 'Champagne',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 3,
-                checked: false
-            }]
-        }];
+        $scope.lists = ListsModel.getListsFirebaseNode();
 
         $scope.selectedList = {
             id: 2,

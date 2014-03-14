@@ -31,10 +31,18 @@
 
         // Ensembles des listes disponible
         "lists": {
+            ".read":true,
             "$oneList" : {
-                // On peut lire et ecrire une listes lorsque celle-ci est inclus la listes des listes de l'utilisateur
-                ".read": "auth != null && root.child('users').child(auth.uid).child('lists').hasChild($oneList)",
-                ".write": "auth != null && root.child('users').child(auth.uid).child('lists').hasChild($oneList)"
+                // && (data.child('ownerUid').val() == auth.uid || data.child('sharedUid').hasChild(auth.uid))
+                ".read": "auth != null ",
+                ".write": "auth != null && (newData.child('ownerUid').val() == auth.uid || newData.child('sharedUid').hasChild(auth.uid))",
+
+                "name": {
+                    ".validate": "newData.isString()"
+                },
+                "ownerUid": {
+                    ".validate": "newData.isString()"
+                }
             }
         }
     }
