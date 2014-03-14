@@ -35,7 +35,7 @@
 
                 <!--Currents lists-->
                 <ul class="nav nav-sidebar">
-                    <li ng-repeat="list in lists" ng-class="(list.id == selectedList.id) ? 'active' : ''"><a>{{ list.name }}</a></li>
+                    <li ng-repeat="list in lists" ng-class="(list.$id == selectedList.$id) ? 'active' : ''" ng-click="selectList(list)"><a>{{ list.name }}</a></li>
                 </ul>
             </div>
 

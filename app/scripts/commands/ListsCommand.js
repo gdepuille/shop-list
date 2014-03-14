@@ -9,7 +9,6 @@ angular.module('shoppingListApp')
 
         var _listsNode = ListsModel.getListsFirebaseNode();
 
-
         // ------------------------------------------------ //
         // -------------- PUBLIC BUSINESS ----------------- //
         // ------------------------------------------------ //
@@ -19,12 +18,17 @@ angular.module('shoppingListApp')
 
             var newList = {
                 name : 'Nouvelle liste',
-                ownerUid : UsersModel.getUser().$id
+                ownerUid : UsersModel.getUser().$id,
+                items : [{
+                    name : "Article",
+                    qte : "1",
+                    checked : false
+                }]
             };
 
             _listsNode.$add(newList).then(
                 function (list) {
-                    $log.debug('test new list :' + list);
+                    $log.debug('Ajout de la nouvelle liste :' + list);
                 }
             );
 

@@ -1,35 +1,17 @@
 'use strict';
 
 angular.module ('shoppingListApp').service ('ListsModel',
-    function ($rootScope, GlobalModel) {
+    function ($rootScope, GlobalModel, ShoppingListConstantes) {
 
         // ------------------------------------------------ //
         // --------------- PRIVATE FIELDS ----------------- //
         // ------------------------------------------------ //
 
-        var _lists;
-
-        var _listsFirebaseNode = GlobalModel.getRootFirebaseNode().$child('lists');
+        var _listsFirebaseNode = GlobalModel.getRootFirebaseNode().$child(ShoppingListConstantes.firebase.LISTS);
 
         // ------------------------------------------------ //
         // ------------------- ACCESSORS ------------------ //
         // ------------------------------------------------ //
-
-        /**
-         * Get the lists
-         * @returns {*}
-         */
-        this.getLists = function () {
-            return _lists;
-        }
-
-        /**
-         * Set the user
-         * @param value
-         */
-        this.setLists = function (value) {
-            _lists = value;
-        }
 
         /**
          * Get the lists firebase node

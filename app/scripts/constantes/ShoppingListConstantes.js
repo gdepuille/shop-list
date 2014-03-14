@@ -14,7 +14,8 @@ angular.module('shoppingListApp').constant('ShoppingListConstantes', {
         USER_UNLOADED : 'UsersModel_USER_UNLOADED'
     },
     firebase : {
-        ROOT : 'https://listecourses.firebaseio.com/'
+        ROOT : 'https://listecourses.firebaseio.com/',
+        USERS : 'users/',
+        LISTS : 'lists/'
     }
-
 });

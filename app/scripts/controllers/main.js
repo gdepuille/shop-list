@@ -3,31 +3,9 @@
 angular.module('shoppingListApp')
     .controller('MainCtrl', function ($rootScope, $scope, $log, ListsCommand, ListsModel, UsersModel) {
 
-        // START MOCK
-
         $scope.lists = ListsModel.getListsFirebaseNode();
 
-        $scope.selectedList = {
-            id: 2,
-            name: 'Achat pour Noël',
-            ownerId: 12345,
-            icon: 'base64 : wxccddsfsbb==',
-            items: [{
-                id: 12,
-                name: 'Foie gras',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 1,
-                checked: false
-            }, {
-                id: 345,
-                name: 'Champagne',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 3,
-                checked: false
-            }]
-        };
-
-        // END MOCK
+        $scope.selectedList = null;
 
         // ---------------------------------------------------------------- //
         // ------------------------------ SCOPE --------------------------- //
@@ -44,6 +22,10 @@ angular.module('shoppingListApp')
         $scope.addList = function () {
             ListsCommand.createList();
         };
+
+        $scope.selectList = function(list) {
+            $scope.selectedList = ListsModel.getListsFirebaseNode().$child(list.$id);
+        }
 
         // ---------------------------------------------------------------- //
         // ------------------------- PRIVATE BUSINESS --------------------- //

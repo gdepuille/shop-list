@@ -9,7 +9,7 @@ angular.module ('shoppingListApp').service ('UsersModel',
 
         var _user;
 
-        var _usersFirebaseNode = GlobalModel.getRootFirebaseNode().$child('users');
+        var _usersFirebaseNode = GlobalModel.getRootFirebaseNode().$child(ShoppingListConstantes.firebase.USERS);
 
         // ------------------------------------------------ //
         // ------------------- ACCESSORS ------------------ //

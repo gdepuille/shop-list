@@ -23,7 +23,8 @@
                     }
                 },
 
-                "$other": {
+                // Juste ce qui est autorisé, le rest no way
+                "$otherUserProps": {
                     ".validate": false
                 }
             }
@@ -31,10 +32,11 @@
 
         // Ensembles des listes disponible
         "lists": {
-            ".read":true,
+            ".read": "auth != null",
+
             "$oneList" : {
-                // && (data.child('ownerUid').val() == auth.uid || data.child('sharedUid').hasChild(auth.uid))
-                ".read": "auth != null ",
+                // Lecture des noeuds qui m'appartienne, ou en partage
+                ".read": "auth != null && (data.child('ownerUid').val() == auth.uid || data.child('sharedUid').hasChild(auth.uid))",
                 ".write": "auth != null && (newData.child('ownerUid').val() == auth.uid || newData.child('sharedUid').hasChild(auth.uid))",
 
                 "name": {
@@ -42,6 +44,35 @@
                 },
                 "ownerUid": {
                     ".validate": "newData.isString()"
+                },
+                "sharedUid": {
+                    "$oneFriend": {
+                        // Seul l'ami peut ecrire sa valeur, et le owner ne se partage pas la liste a lui même
+                        ".validate": "newData.isString() && newData.val() != newData.parent().parent().child('ownerUid').val()"
+                    }
+                },
+                "items": {
+                    "$oneItem": {
+                        "name": {
+                            ".validate": "newData.isString()"
+                        },
+                        "qte": {
+                            ".validate": "newData.isNumber()"
+                        },
+                        "checked": {
+                            ".validate": "newData.isBoolean()"
+                        },
+
+                        // Juste ce qui est autorisé, le rest no way
+                        "$otherItemProps": {
+                            ".validate": false
+                        }
+                    }
+                },
+
+                // Juste ce qui est autorisé, le rest no way
+                "$otherListProps": {
+                    ".validate": false
                 }
             }
         }
