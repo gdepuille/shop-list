@@ -13,7 +13,6 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>Ajouter une liste</a></li>
                     <li class="dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">{{ user.firstName }} {{ user.lastName }} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -27,11 +26,20 @@
 
     <div class="container-fluid">
         <div class="row">
+
+            <!--Sidebar-->
             <div class="col-sm-3 col-md-2 sidebar">
+                <!--Add a list-->
+                <button class="btn btn-success" ng-click="addList()">Ajouter une liste</button>
+                <br/><br/>
+
+                <!--Currents lists-->
                 <ul class="nav nav-sidebar">
                     <li ng-repeat="list in lists" ng-class="(list.id == selectedList.id) ? 'active' : ''"><a>{{ list.name }}</a></li>
                 </ul>
             </div>
+
+            <!--Content-->
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h1 class="page-header">{{ selectedList.name }}</h1>
 
