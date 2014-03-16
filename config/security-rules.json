@@ -32,12 +32,16 @@
 
         // Ensembles des listes disponible
         "lists": {
+            // La sécurité ne peut pas servir de filtre pour la récupération de données.
+            // Pour résoudre cette problématique il faut mettre en place un backend avec un ElesticSearch ou MongoDB.
+            // Sinon, il ne faut pas avoir peur de dénormaliser : https://www.firebase.com/blog/2013-04-12-denormalizing-is-normal.html
             ".read": "auth != null",
 
-            "$oneList" : {
-                // Lecture des noeuds qui m'appartienne, ou en partage
-                ".read": "auth != null && (data.child('ownerUid').val() == auth.uid || data.child('sharedUid').hasChild(auth.uid))",
+            "$oneList": {
                 ".write": "auth != null && (newData.child('ownerUid').val() == auth.uid || newData.child('sharedUid').hasChild(auth.uid))",
+
+                // Il faut au minimum un nom et l'id du propriétaire
+                ".validate": "newData.hasChildren(['name', 'ownerUid'])",
 
                 "name": {
                     ".validate": "newData.isString()"
@@ -48,7 +52,7 @@
                 "sharedUid": {
                     "$oneFriend": {
                         // Seul l'ami peut ecrire sa valeur, et le owner ne se partage pas la liste a lui même
-                        ".validate": "newData.isString() && newData.val() != newData.parent().parent().child('ownerUid').val()"
+                        ".validate": "newData.isString() && $oneFriend != newData.parent().parent().child('ownerUid').val()"
                     }
                 },
                 "items": {

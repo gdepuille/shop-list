@@ -3,28 +3,32 @@
 angular.module('shoppingListApp')
     .controller('MainCtrl', function ($rootScope, $scope, $log, ListsCommand, ListsModel, UsersModel) {
 
-        $scope.lists = ListsModel.getListsFirebaseNode();
-
-        $scope.selectedList = null;
-
         // ---------------------------------------------------------------- //
         // ------------------------------ SCOPE --------------------------- //
         // ---------------------------------------------------------------- //
 
         /* Information sur l'utilisateur connecté */
+
         $scope.user = UsersModel.getUser();
+
+        /* Ensemble des listes de la base de données */
+        $scope.lists = ListsModel.getListsFirebaseNode();
+
+        /* Liste en cours et selectionné */
+        $scope.selectedList = undefined;
 
         // Appel du logout
         $scope.logout = function () {
             UsersCommand.logout();
         };
 
+        // Ajout d'une nouvelle liste.
         $scope.addList = function () {
             ListsCommand.createList();
         };
 
-        $scope.selectList = function(list) {
-            $scope.selectedList = ListsModel.getListsFirebaseNode().$child(list.$id);
+        $scope.selectList = function(listId) {
+            $scope.selectedList = ListsModel.getListsFirebaseNode().$child(listId);
         }
 
         // ---------------------------------------------------------------- //
