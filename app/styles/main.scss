@@ -137,6 +137,18 @@ body {
   background-image: url(../images/twitter.png);
 }
 
+.icon-edit {
+  background-image: url(../images/pencil.png);
+}
+
+.icon-share {
+  background-image: url(../images/users.png);
+}
+
+.icon-barcode {
+  background-image: url(../images/barcode.png);
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
