@@ -11,7 +11,8 @@ angular.module('shoppingListApp').constant('ShoppingListConstantes', {
     },
     events : {
         USER_LOADED : 'UsersModel_USER_LOADED',
-        USER_UNLOADED : 'UsersModel_USER_UNLOADED'
+        USER_UNLOADED : 'UsersModel_USER_UNLOADED',
+        NEW_LIST_ADDED : 'ListsCommand_NEW_LIST_ADDED'
     },
     firebase : {
         ROOT : 'https://listecourses.firebaseio.com/',

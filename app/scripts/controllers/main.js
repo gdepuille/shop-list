@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('shoppingListApp')
-    .controller('MainCtrl', function ($rootScope, $scope, $log, ListsCommand, ListsModel, UsersModel) {
+    .controller('MainCtrl', function ($rootScope, $scope, $log, ShoppingListConstantes, ListsCommand, ListsModel, UsersModel) {
 
         // ---------------------------------------------------------------- //
         // ------------------------------ SCOPE --------------------------- //
@@ -30,6 +30,14 @@ angular.module('shoppingListApp')
         $scope.selectList = function(listId) {
             $scope.selectedList = ListsModel.getListsFirebaseNode().$child(listId);
         }
+
+        // ---------------------------------------------------------------- //
+        // -------------------------- EVENT HANDLERS ---------------------- //
+        // ---------------------------------------------------------------- //
+
+        $rootScope.$on(ShoppingListConstantes.events.NEW_LIST_ADDED, function(event, listId) {
+            $scope.selectList(listId);
+        });
 
         // ---------------------------------------------------------------- //
         // ------------------------- PRIVATE BUSINESS --------------------- //

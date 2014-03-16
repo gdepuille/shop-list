@@ -36,6 +36,8 @@ angular.module('shoppingListApp')
                         function (item) {
                             $log.debug ('Ajout du premier item dans la nouvelle liste : ' + item.name());
 
+                            // Dispatch notif
+                            $rootScope.$broadcast(ShoppingListConstantes.events.NEW_LIST_ADDED, list.name());
                         }
                     );
                 }
