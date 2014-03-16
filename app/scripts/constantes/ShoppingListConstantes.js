@@ -15,7 +15,8 @@ angular.module('shoppingListApp').constant('ShoppingListConstantes', {
     },
     firebase : {
         ROOT : 'https://listecourses.firebaseio.com/',
-        USERS : 'users/',
-        LISTS : 'lists/'
+        USERS : 'users',
+        LISTS : 'lists',
+        ITEMS : 'items'
     }
 });

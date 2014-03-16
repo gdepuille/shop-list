@@ -19,16 +19,25 @@ angular.module('shoppingListApp')
             var newList = {
                 name : 'Nouvelle liste',
                 ownerUid : UsersModel.getUser().$id,
-                items : [{
-                    name : "Article",
-                    qte : "1",
-                    checked : false
-                }]
             };
 
             _listsNode.$add(newList).then(
                 function (list) {
-                    $log.debug('Ajout de la nouvelle liste :' + list);
+                    $log.debug('Ajout de la nouvelle liste : ' + list.name());
+
+                    // Ajout d'un premier item exemple.
+                    var firstItem = {
+                        name: 'Article',
+                        qte: 1,
+                        checked: false
+                    };
+
+                    _listsNode.$child(list.name()).$child(ShoppingListConstantes.firebase.ITEMS).$add(firstItem).then(
+                        function (item) {
+                            $log.debug ('Ajout du premier item dans la nouvelle liste : ' + item.name());
+
+                        }
+                    );
                 }
             );
 
