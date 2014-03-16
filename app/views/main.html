@@ -41,7 +41,14 @@
 
             <!--Content-->
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h1 class="page-header">{{ selectedList.name }}</h1>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h1 class="page-header"><span ng-show="selectedList.ownerUid == user.$id" class="icon-action-edit"><i></i></span> {{ selectedList.name }}</h1>
+                    </div>
+                    <div class="col-sm-2">
+                        <span ng-show="selectedList.ownerUid == user.$id" class="icon-action-share"><i></i></span>
+                    </div>
+                </div>
 
                 <div class="row">
                     <ul>

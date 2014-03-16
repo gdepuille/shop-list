@@ -112,6 +112,9 @@ body {
   height: 32px;
   background-repeat: no-repeat;
 }
+[class*="icon-action-"] {
+  cursor: pointer;
+}
 
 .btn-login-facebook {
   background: #4c699e;
@@ -137,15 +140,15 @@ body {
   background-image: url(../images/twitter.png);
 }
 
-.icon-edit {
+.icon-action-edit {
   background-image: url(../images/pencil.png);
 }
 
-.icon-share {
+.icon-action-share {
   background-image: url(../images/users.png);
 }
 
-.icon-barcode {
+.icon-action-barcode {
   background-image: url(../images/barcode.png);
 }
 
