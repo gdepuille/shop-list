@@ -112,6 +112,9 @@ body {
   height: 32px;
   background-repeat: no-repeat;
 }
+[class*="icon-action-"] {
+  cursor: pointer;
+}
 
 .btn-login-facebook {
   background: #4c699e;
@@ -135,6 +138,18 @@ body {
 
 .icon-twitter {
   background-image: url(../images/twitter.png);
+}
+
+.icon-action-edit {
+  background-image: url(../images/pencil.png);
+}
+
+.icon-action-share {
+  background-image: url(../images/users.png);
+}
+
+.icon-action-barcode {
+  background-image: url(../images/barcode.png);
 }
 
 /* Responsive: Portrait tablets and up */
@@ -192,14 +207,26 @@ body {
   margin-left: -20px;
 }
 
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
+.nav-sidebar {
+  li {
+    a {
+      cursor: pointer;
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+  }
 }
 
-.nav-sidebar > .active > a {
-  color: #fff;
-  background-color: #428bca;
+.nav-sidebar {
+  .active {
+    a {
+      color: #fff;
+      background-color: #428bca;
+    }
+    a:hover {
+      color: #000099;
+    }
+  }
 }
 
 /*

@@ -9,7 +9,6 @@ angular.module('shoppingListApp')
 
         var _listsNode = ListsModel.getListsFirebaseNode();
 
-
         // ------------------------------------------------ //
         // -------------- PUBLIC BUSINESS ----------------- //
         // ------------------------------------------------ //
@@ -19,12 +18,28 @@ angular.module('shoppingListApp')
 
             var newList = {
                 name : 'Nouvelle liste',
-                ownerUid : UsersModel.getUser().$id
+                ownerUid : UsersModel.getUser().$id,
             };
 
             _listsNode.$add(newList).then(
                 function (list) {
-                    $log.debug('test new list :' + list);
+                    $log.debug('Ajout de la nouvelle liste : ' + list.name());
+
+                    // Ajout d'un premier item exemple.
+                    var firstItem = {
+                        name: 'Article',
+                        qte: 1,
+                        checked: false
+                    };
+
+                    _listsNode.$child(list.name()).$child(ShoppingListConstantes.firebase.ITEMS).$add(firstItem).then(
+                        function (item) {
+                            $log.debug ('Ajout du premier item dans la nouvelle liste : ' + item.name());
+
+                            // Dispatch notif
+                            $rootScope.$broadcast(ShoppingListConstantes.events.NEW_LIST_ADDED, list.name());
+                        }
+                    );
                 }
             );
 

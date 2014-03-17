@@ -1,49 +1,43 @@
 'use strict';
 
 angular.module('shoppingListApp')
-    .controller('MainCtrl', function ($rootScope, $scope, $log, ListsCommand, ListsModel, UsersModel) {
-
-        // START MOCK
-
-        $scope.lists = ListsModel.getListsFirebaseNode();
-
-        $scope.selectedList = {
-            id: 2,
-            name: 'Achat pour Noël',
-            ownerId: 12345,
-            icon: 'base64 : wxccddsfsbb==',
-            items: [{
-                id: 12,
-                name: 'Foie gras',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 1,
-                checked: false
-            }, {
-                id: 345,
-                name: 'Champagne',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 3,
-                checked: false
-            }]
-        };
-
-        // END MOCK
+    .controller('MainCtrl', function ($rootScope, $scope, $log, ShoppingListConstantes, ListsCommand, ListsModel, UsersModel) {
 
         // ---------------------------------------------------------------- //
         // ------------------------------ SCOPE --------------------------- //
         // ---------------------------------------------------------------- //
 
         /* Information sur l'utilisateur connecté */
+
         $scope.user = UsersModel.getUser();
+
+        /* Ensemble des listes de la base de données */
+        $scope.lists = ListsModel.getListsFirebaseNode();
+
+        /* Liste en cours et selectionné */
+        $scope.selectedList = undefined;
 
         // Appel du logout
         $scope.logout = function () {
             UsersCommand.logout();
         };
 
+        // Ajout d'une nouvelle liste.
         $scope.addList = function () {
             ListsCommand.createList();
         };
+
+        $scope.selectList = function(listId) {
+            $scope.selectedList = ListsModel.getListsFirebaseNode().$child(listId);
+        }
+
+        // ---------------------------------------------------------------- //
+        // -------------------------- EVENT HANDLERS ---------------------- //
+        // ---------------------------------------------------------------- //
+
+        $rootScope.$on(ShoppingListConstantes.events.NEW_LIST_ADDED, function(event, listId) {
+            $scope.selectList(listId);
+        });
 
         // ---------------------------------------------------------------- //
         // ------------------------- PRIVATE BUSINESS --------------------- //
