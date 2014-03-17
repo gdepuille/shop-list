@@ -13,6 +13,9 @@ angular.module('shoppingListApp')
         // -------------- PUBLIC BUSINESS ----------------- //
         // ------------------------------------------------ //
 
+        /**
+         * Create e new list
+         */
         this.createList = function () {
             $log.debug('ListsCommand : create a list');
 

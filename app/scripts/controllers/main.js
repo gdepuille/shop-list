@@ -27,14 +27,29 @@ angular.module('shoppingListApp')
             ListsCommand.createList();
         };
 
+        /**
+         * Set the selected list
+         * @param listId
+         */
         $scope.selectList = function(listId) {
             $scope.selectedList = ListsModel.getListsFirebaseNode().$child(listId);
-        }
+        };
+
+        /**
+         * Is the selected list is the property of the current user ?
+         * @returns {boolean}
+         */
+        $scope.isOwnerOfList = function () {
+            return angular.isDefined($scope.selectedList) && angular.isString($scope.selectedList.ownerUid) &&  $scope.selectedList.ownerUid == $scope.user.$id;
+        };
 
         // ---------------------------------------------------------------- //
         // -------------------------- EVENT HANDLERS ---------------------- //
         // ---------------------------------------------------------------- //
 
+        /**
+         * Listener new list added
+         */
         $rootScope.$on(ShoppingListConstantes.events.NEW_LIST_ADDED, function(event, listId) {
             $scope.selectList(listId);
         });
