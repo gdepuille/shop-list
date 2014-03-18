@@ -46,8 +46,10 @@
                         <span ng-show="isOwnerOfList()" ng-click="isNameEditable = !isNameEditable" ng-init="isNameEditable = false" class="icon-action-edit"></span>
                     </div>
                     <div class="col-sm-9">
-                        <h1 ng-show="!isNameEditable" class="page-header">{{ selectedList.name }}</h1>
-                        <input ng-show="isNameEditable" ng-keypress="isNameEditable = $event.keyCode===13?false:true" type="text" ng-model="selectedList.name"/>
+                        <h1 ng-show="!isNameEditable" class="list-name">{{ selectedList.name }}</h1>
+                        <input type="text" ng-model="selectedList.name" ng-show="isNameEditable"
+                               ng-keypress="isNameEditable = $event.keyCode===13?false:true"
+                               class="list-name-input" />
                     </div>
                     <div class="col-sm-2" ng-show="isOwnerOfList()">
                         <span class="icon-action-share"><i></i></span>
