@@ -1,77 +1,62 @@
 'use strict';
 
 angular.module('shoppingListApp')
-    .controller('MainCtrl', function ($rootScope, $scope, $log, ShoppingListConstantes, UsersCommand, UsersModel) {
+    .controller('MainCtrl', function ($rootScope, $scope, $log, ShoppingListConstantes, ListsCommand, ListsModel, UsersModel) {
 
-        // START MOCK
-
-        $scope.lists = [{
-            id: 1,
-            name: 'Achat pour Haloween',
-            ownerId: 12345,
-            icon: 'base64 : wxccddsfsbb==',
-            items: [{
-                id: 34566,
-                name: 'Beurre',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 1,
-                checked: false
-            }, {
-                id: 123,
-                name: 'Carambar',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 3,
-                checked: false
-            }]
-        }, {
-            id: 2,
-            name: 'Achat pour Noël',
-            ownerId: 12345,
-            icon: 'base64 : wxccddsfsbb==',
-            items: [{
-                id: 12,
-                name: 'Foie gras',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 1,
-                checked: false
-            }, {
-                id: 345,
-                name: 'Champagne',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 3,
-                checked: false
-            }]
-        }];
-
-        $scope.selectedList = {
-            id: 2,
-            name: 'Achat pour Noël',
-            ownerId: 12345,
-            icon: 'base64 : wxccddsfsbb==',
-            items: [{
-                id: 12,
-                name: 'Foie gras',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 1,
-                checked: false
-            }, {
-                id: 345,
-                name: 'Champagne',
-                icon: 'base64 : dgdfhfhdfgdhdghdghd==',
-                qte: 3,
-                checked: false
-            }]
-        };
-
-        // END MOCK
+        // ---------------------------------------------------------------- //
+        // ------------------------------ SCOPE --------------------------- //
+        // ---------------------------------------------------------------- //
 
         /* Information sur l'utilisateur connecté */
+
         $scope.user = UsersModel.getUser();
+
+        /* Ensemble des listes de la base de données */
+        $scope.lists = ListsModel.getListsFirebaseNode();
+
+        /* Liste en cours et selectionné */
+        $scope.selectedList = undefined;
 
         // Appel du logout
         $scope.logout = function () {
             UsersCommand.logout();
         };
+
+        // Ajout d'une nouvelle liste.
+        $scope.addList = function () {
+            ListsCommand.createList();
+        };
+
+        /**
+         * Set the selected list
+         * @param listId
+         */
+        $scope.selectList = function(listId) {
+            ListsModel.getListsFirebaseNode().$child(listId).$bind($scope, 'selectedList');
+        };
+
+        /**
+         * Is the selected list is the property of the current user ?
+         * @returns {boolean}
+         */
+        $scope.isOwnerOfList = function () {
+            return angular.isDefined($scope.selectedList) && angular.isString($scope.selectedList.ownerUid) &&  $scope.selectedList.ownerUid == $scope.user.$id;
+        };
+
+        // ---------------------------------------------------------------- //
+        // -------------------------- EVENT HANDLERS ---------------------- //
+        // ---------------------------------------------------------------- //
+
+        /**
+         * Listener new list added
+         */
+        $rootScope.$on(ShoppingListConstantes.events.NEW_LIST_ADDED, function(event, listId) {
+            $scope.selectList(listId);
+        });
+
+        // ---------------------------------------------------------------- //
+        // ------------------------- PRIVATE BUSINESS --------------------- //
+        // ---------------------------------------------------------------- //
 
         /* Méthode d'initialisation du controller */
         var initialise = function() {
@@ -82,9 +67,12 @@ angular.module('shoppingListApp')
                 // Dispatch de l'event firebase afin de ne pas recoder ce qui est déjà fait dans le UsersObserver
                 $rootScope.$broadcast('$firebaseSimpleLogin:logout');
             }
-        }
+        };
 
-        // Init
+        // ---------------------------------------------------------------- //
+        // ---------------------------- INITIALIZE ------------------------ //
+        // ---------------------------------------------------------------- //
+
         initialise();
     }
 );

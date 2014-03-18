@@ -13,7 +13,6 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>Ajouter une liste</a></li>
                     <li class="dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">{{ user.firstName }} {{ user.lastName }} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -27,13 +26,33 @@
 
     <div class="container-fluid">
         <div class="row">
+
+            <!--Sidebar-->
             <div class="col-sm-3 col-md-2 sidebar">
+                <!--Add a list-->
+                <button class="btn btn-success" ng-click="addList()">Ajouter une liste</button>
+                <br/><br/>
+
+                <!--Currents lists-->
                 <ul class="nav nav-sidebar">
-                    <li ng-repeat="list in lists" ng-class="(list.id == selectedList.id) ? 'active' : ''"><a>{{ list.name }}</a></li>
+                    <li ng-repeat="(nodeId, list) in lists" ng-class="(nodeId == selectedList.$id) ? 'active' : ''" ng-click="selectList(nodeId)"><a>{{ list.name }}</a></li>
                 </ul>
             </div>
+
+            <!--Content-->
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h1 class="page-header">{{ selectedList.name }}</h1>
+                <div class="row">
+                    <div class="col-sm-1">
+                        <span ng-show="isOwnerOfList()" ng-click="isNameEditable = !isNameEditable" ng-init="isNameEditable = false" class="icon-action-edit"></span>
+                    </div>
+                    <div class="col-sm-9">
+                        <h1 ng-show="!isNameEditable" class="page-header">{{ selectedList.name }}</h1>
+                        <input ng-show="isNameEditable" ng-keypress="isNameEditable = $event.keyCode===13?false:true" type="text" ng-model="selectedList.name"/>
+                    </div>
+                    <div class="col-sm-2" ng-show="isOwnerOfList()">
+                        <span class="icon-action-share"><i></i></span>
+                    </div>
+                </div>
 
                 <div class="row">
                     <ul>
