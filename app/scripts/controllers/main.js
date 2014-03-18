@@ -32,7 +32,7 @@ angular.module('shoppingListApp')
          * @param listId
          */
         $scope.selectList = function(listId) {
-            $scope.selectedList = ListsModel.getListsFirebaseNode().$child(listId);
+            ListsModel.getListsFirebaseNode().$child(listId).$bind($scope, 'selectedList');
         };
 
         /**

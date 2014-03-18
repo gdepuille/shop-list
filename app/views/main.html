@@ -42,8 +42,12 @@
             <!--Content-->
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <div class="row">
-                    <div class="col-sm-10">
-                        <h1 class="page-header"><span ng-show="isOwnerOfList()" class="icon-action-edit"><i></i></span> {{ selectedList.name }}</h1>
+                    <div class="col-sm-1">
+                        <span ng-show="isOwnerOfList()" ng-click="isNameEditable = !isNameEditable" ng-init="isNameEditable = false" class="icon-action-edit"></span>
+                    </div>
+                    <div class="col-sm-9">
+                        <h1 ng-show="!isNameEditable" class="page-header">{{ selectedList.name }}</h1>
+                        <input ng-show="isNameEditable" ng-keypress="isNameEditable = $event.keyCode===13?false:true" type="text" ng-model="selectedList.name"/>
                     </div>
                     <div class="col-sm-2" ng-show="isOwnerOfList()">
                         <span class="icon-action-share"><i></i></span>
