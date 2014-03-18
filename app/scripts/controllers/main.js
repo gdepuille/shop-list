@@ -17,6 +17,9 @@ angular.module('shoppingListApp')
         /* Liste en cours et selectionné */
         $scope.selectedList = undefined;
 
+        /* Réference to the last selected unbind */
+        var unbindLastSelected = undefined;
+
         // Appel du logout
         $scope.logout = function () {
             UsersCommand.logout();
@@ -32,7 +35,18 @@ angular.module('shoppingListApp')
          * @param listId
          */
         $scope.selectList = function(listId) {
-            ListsModel.getListsFirebaseNode().$child(listId).$bind($scope, 'selectedList');
+            if (angular.isDefined(unbindLastSelected) && angular.isDefined($scope.selectedList)) {
+                // Remove last 3 Way data binding before register another.
+                unbindLastSelected();
+                unbindLastSelected = undefined;
+                $scope.selectedList = undefined;
+            }
+
+            ListsModel.getListsFirebaseNode().$child(listId).$bind($scope, 'selectedList').then(function(unbind) {
+                // Save the reference to the unbind.
+                // Death bug !
+                unbindLastSelected = unbind;
+            });
         };
 
         /**
